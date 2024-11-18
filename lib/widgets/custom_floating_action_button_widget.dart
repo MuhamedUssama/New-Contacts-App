@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 
 class CustomFloatingActionButtonWidget extends StatelessWidget {
-  const CustomFloatingActionButtonWidget({super.key});
+  final Function showAddContact;
+  const CustomFloatingActionButtonWidget({
+    super.key,
+    required this.showAddContact,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,9 @@ class CustomFloatingActionButtonWidget extends StatelessWidget {
         Visibility(
           visible: true,
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              showAddContact(context);
+            },
             tooltip: 'Increment',
             backgroundColor: AppColors.white,
             child: const Icon(

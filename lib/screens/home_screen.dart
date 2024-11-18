@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';
+import '../widgets/add_contact_bottom_sheet.dart';
 import '../widgets/custom_floating_action_button_widget.dart';
 import '../widgets/placeholder_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> contacts = [];
 
   @override
@@ -30,7 +36,17 @@ class HomeScreen extends StatelessWidget {
           : const Column(
               children: [],
             ),
-      floatingActionButton: const CustomFloatingActionButtonWidget(),
+      floatingActionButton: CustomFloatingActionButtonWidget(
+        showAddContact: showContactBottomSheet,
+      ),
+    );
+  }
+
+  showContactBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (_) => const AddContactBottomSheet(),
     );
   }
 }
