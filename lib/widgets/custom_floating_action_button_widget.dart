@@ -34,7 +34,7 @@ class CustomFloatingActionButtonWidget extends StatelessWidget {
             onPressed: () {
               showAddContact(context);
             },
-            tooltip: 'Increment',
+            tooltip: 'Add Contact',
             backgroundColor: AppColors.white,
             child: const Icon(
               Icons.add,
