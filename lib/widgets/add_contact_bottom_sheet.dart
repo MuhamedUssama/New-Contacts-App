@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:new_contacts_app/models/contact_model.dart';
 import 'package:new_contacts_app/utils/app_assets.dart';
 import 'package:new_contacts_app/utils/app_styles.dart';
+import 'package:new_contacts_app/utils/image_picker_utils.dart';
 import 'package:new_contacts_app/utils/validation.dart';
 
 import '../utils/app_colors.dart';
@@ -28,6 +31,7 @@ class _AddContactBottomSheetState extends State<AddContactBottomSheet> {
   final TextEditingController phoneNumberController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  File? pickedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +68,24 @@ class _AddContactBottomSheetState extends State<AddContactBottomSheet> {
                       border: Border.all(color: AppColors.white),
                       borderRadius: BorderRadius.circular(28),
                     ),
-                    child: Center(
-                      child: Lottie.asset(AppAnimations.imagePicker),
-                    ),
+                    child: pickedImage == null
+                        ? Center(
+                            child: GestureDetector(
+                              onTap: () async {
+                                File? tempImage =
+                                    await ImagePickerUtils.galleryPicker();
+                                if (tempImage != null) {
+                                  pickedImage = tempImage;
+                                }
+                                setState(() {});
+                              },
+                              child: Lottie.asset(AppAnimations.imagePicker),
+                            ),
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(28),
+                            child: Image.file(pickedImage!, fit: BoxFit.fill),
+                          ),
                   ),
                 ),
                 const SizedBox(width: 8),
