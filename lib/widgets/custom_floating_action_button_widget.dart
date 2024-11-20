@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 
 class CustomFloatingActionButtonWidget extends StatelessWidget {
+  final bool isAddButtonVisible;
+  final bool isDeleteButtonVisible;
   final Function showAddContact;
+  final Function deleteContact;
+
   const CustomFloatingActionButtonWidget({
     super.key,
     required this.showAddContact,
+    required this.isAddButtonVisible,
+    required this.isDeleteButtonVisible,
+    required this.deleteContact,
   });
 
   @override
@@ -15,9 +22,11 @@ class CustomFloatingActionButtonWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Visibility(
-          visible: true,
+          visible: isDeleteButtonVisible,
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              deleteContact();
+            },
             tooltip: 'Delete',
             backgroundColor: AppColors.red,
             child: const Icon(
@@ -29,7 +38,7 @@ class CustomFloatingActionButtonWidget extends StatelessWidget {
         ),
         const Visibility(visible: true, child: SizedBox(height: 8)),
         Visibility(
-          visible: true,
+          visible: isAddButtonVisible,
           child: FloatingActionButton(
             onPressed: () {
               showAddContact(context);

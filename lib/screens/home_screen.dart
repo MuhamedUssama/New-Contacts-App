@@ -6,6 +6,7 @@ import '../utils/app_colors.dart';
 import '../widgets/add_contact_bottom_sheet.dart';
 import '../widgets/custom_floating_action_button_widget.dart';
 import '../widgets/placeholder_widget.dart';
+import '../widgets/screen_contacts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,25 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: contacts.isEmpty
           ? const PlaceholderWidget()
-          : Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return Text(contacts[index].userName);
-                    },
-                    itemCount: contacts.length,
-                  ),
-                )
-              ],
+          : ScreenContacts(
+              height: height,
+              width: width,
+              contacts: contacts,
+              onContactDeleteClicked: deleteContactByIndex,
             ),
       floatingActionButton: CustomFloatingActionButtonWidget(
+        isAddButtonVisible: contacts.length < 6,
+        isDeleteButtonVisible: contacts.isNotEmpty,
         showAddContact: showContactBottomSheet,
+        deleteContact: deleteContact,
       ),
     );
   }
 
-  showContactBottomSheet(BuildContext context) {
+  void showContactBottomSheet(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -63,5 +61,15 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+  }
+
+  void deleteContact() {
+    contacts.removeLast();
+    setState(() {});
+  }
+
+  void deleteContactByIndex(int index) {
+    contacts.removeAt(index);
+    setState(() {});
   }
 }

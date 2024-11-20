@@ -186,6 +186,7 @@ class _AddContactBottomSheetState extends State<AddContactBottomSheet> {
           userName: userNameController.text,
           email: emailController.text,
           phone: phoneNumberController.text,
+          imageFile: pickedImage,
         ),
       );
       widget.onContactAdded();
