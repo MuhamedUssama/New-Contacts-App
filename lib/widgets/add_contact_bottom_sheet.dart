@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:new_contacts_app/models/contact_model.dart';
 import 'package:new_contacts_app/utils/app_assets.dart';
 import 'package:new_contacts_app/utils/app_styles.dart';
+import 'package:new_contacts_app/utils/validation.dart';
 
 import '../utils/app_colors.dart';
 import 'cutom_text_form_field.dart';
 
 class AddContactBottomSheet extends StatefulWidget {
-  const AddContactBottomSheet({super.key});
+  final List<ContactModel> contacts;
+  final VoidCallback onContactAdded;
+
+  const AddContactBottomSheet({
+    super.key,
+    required this.contacts,
+    required this.onContactAdded,
+  });
 
   @override
   State<AddContactBottomSheet> createState() => _AddContactBottomSheetState();
@@ -15,10 +24,10 @@ class AddContactBottomSheet extends StatefulWidget {
 
 class _AddContactBottomSheetState extends State<AddContactBottomSheet> {
   final TextEditingController userNameController = TextEditingController();
-
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController phoneNumberController = TextEditingController();
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -95,23 +104,45 @@ class _AddContactBottomSheetState extends State<AddContactBottomSheet> {
               ],
             ),
             const SizedBox(height: 16),
-            CustomTextFormField(
-              hintText: 'Enter User Name',
-              controller: userNameController,
-            ),
-            const SizedBox(height: 8),
-            CustomTextFormField(
-              hintText: 'Enter User Email',
-              controller: emailController,
-            ),
-            const SizedBox(height: 8),
-            CustomTextFormField(
-              hintText: 'Enter User Phone',
-              controller: phoneNumberController,
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  CustomTextFormField(
+                    hintText: 'Enter User Name',
+                    controller: userNameController,
+                    validator: (value) {
+                      return Validation.notEmptyFieldValidator(
+                        value,
+                        'Please enter a user name',
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    hintText: 'Enter User Email',
+                    controller: emailController,
+                    validator: (value) {
+                      return Validation.emailValidator(value);
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    hintText: 'Enter User Phone',
+                    controller: phoneNumberController,
+                    validator: (value) {
+                      return Validation.notEmptyFieldValidator(
+                        value,
+                        'Please enter your phone',
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: addContact,
               style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.white,
                   fixedSize: Size(width, height * 0.07),
@@ -127,5 +158,19 @@ class _AddContactBottomSheetState extends State<AddContactBottomSheet> {
         ),
       ),
     );
+  }
+
+  void addContact() {
+    if (formKey.currentState!.validate()) {
+      widget.contacts.add(
+        ContactModel(
+          userName: userNameController.text,
+          email: emailController.text,
+          phone: phoneNumberController.text,
+        ),
+      );
+      widget.onContactAdded();
+      Navigator.pop(context);
+    }
   }
 }

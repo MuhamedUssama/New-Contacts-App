@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_contacts_app/models/contact_model.dart';
 
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';
@@ -14,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Widget> contacts = [];
+  final List<ContactModel> contacts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: contacts.isEmpty
           ? const PlaceholderWidget()
-          : const Column(
-              children: [],
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Text(contacts[index].userName);
+                    },
+                    itemCount: contacts.length,
+                  ),
+                )
+              ],
             ),
       floatingActionButton: CustomFloatingActionButtonWidget(
         showAddContact: showContactBottomSheet,
@@ -46,7 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (_) => const AddContactBottomSheet(),
+      builder: (_) => AddContactBottomSheet(
+        contacts: contacts,
+        onContactAdded: () {
+          setState(() {});
+        },
+      ),
     );
   }
 }

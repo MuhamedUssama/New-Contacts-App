@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:new_contacts_app/utils/app_colors.dart';
 import 'package:new_contacts_app/utils/app_styles.dart';
 
+typedef ValidationFunction = String? Function(String?);
+
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final ValidationFunction validator;
 
   const CustomTextFormField({
     super.key,
     required this.controller,
     required this.hintText,
+    required this.validator,
   });
 
   @override
@@ -18,6 +22,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       cursorColor: AppColors.white,
       style: AppStyles.font16WhiteMudium,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: AppStyles.hintTextStyle,
