@@ -35,14 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: contacts.isEmpty
           ? const PlaceholderWidget()
-          : ScreenContacts(height: height, width: width, contacts: contacts),
+          : ScreenContacts(
+              height: height,
+              width: width,
+              contacts: contacts,
+              onContactDeleteClicked: deleteContactByIndex,
+            ),
       floatingActionButton: CustomFloatingActionButtonWidget(
+        isAddButtonVisible: contacts.length < 6,
+        isDeleteButtonVisible: contacts.isNotEmpty,
         showAddContact: showContactBottomSheet,
+        deleteContact: deleteContact,
       ),
     );
   }
 
-  showContactBottomSheet(BuildContext context) {
+  void showContactBottomSheet(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -53,5 +61,15 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+  }
+
+  void deleteContact() {
+    contacts.removeLast();
+    setState(() {});
+  }
+
+  void deleteContactByIndex(int index) {
+    contacts.removeAt(index);
+    setState(() {});
   }
 }

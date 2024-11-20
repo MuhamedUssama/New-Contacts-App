@@ -7,12 +7,14 @@ class ScreenContacts extends StatelessWidget {
   final double height;
   final double width;
   final List<ContactModel> contacts;
+  final Function onContactDeleteClicked;
 
   const ScreenContacts({
     super.key,
     required this.height,
     required this.width,
     required this.contacts,
+    required this.onContactDeleteClicked,
   });
 
   @override
@@ -33,6 +35,9 @@ class ScreenContacts extends StatelessWidget {
                   height: height,
                   width: width,
                   contact: contacts[index],
+                  deleteContactByIndex: () {
+                    onContactDeleteClicked(index);
+                  },
                 );
               },
               itemCount: contacts.length,

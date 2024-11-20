@@ -9,6 +9,7 @@ class ContactCardWidget extends StatelessWidget {
   final double width;
   final double height;
   final ContactModel contact;
+  final Function deleteContactByIndex;
 
   String trimString(String input) {
     if (input.length > 16) {
@@ -22,6 +23,7 @@ class ContactCardWidget extends StatelessWidget {
     required this.width,
     required this.height,
     required this.contact,
+    required this.deleteContactByIndex,
   });
 
   @override
@@ -97,7 +99,9 @@ class ContactCardWidget extends StatelessWidget {
                     ],
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      deleteContactByIndex();
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.red,
                       fixedSize: Size(width, height * 0.02),
