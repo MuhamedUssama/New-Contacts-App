@@ -10,6 +10,13 @@ class ContactCardWidget extends StatelessWidget {
   final double height;
   final ContactModel contact;
 
+  String trimString(String input) {
+    if (input.length > 16) {
+      return '${input.substring(0, 16)}..';
+    }
+    return input;
+  }
+
   const ContactCardWidget({
     super.key,
     required this.width,
@@ -22,6 +29,7 @@ class ContactCardWidget extends StatelessWidget {
     return Container(
       height: height * 0.32,
       width: width * 0.45,
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
@@ -72,7 +80,7 @@ class ContactCardWidget extends StatelessWidget {
                       Image.asset(AppIcons.emailIcon, height: 16, width: 20),
                       const SizedBox(width: 8),
                       Text(
-                        contact.email,
+                        trimString(contact.email),
                         style: AppStyles.cardContentTextStyle,
                       ),
                     ],

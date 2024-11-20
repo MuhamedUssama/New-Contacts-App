@@ -4,9 +4,9 @@ import 'package:new_contacts_app/models/contact_model.dart';
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';
 import '../widgets/add_contact_bottom_sheet.dart';
-import '../widgets/contact_card_widget.dart';
 import '../widgets/custom_floating_action_button_widget.dart';
 import '../widgets/placeholder_widget.dart';
+import '../widgets/screen_contacts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,26 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: contacts.isEmpty
           ? const PlaceholderWidget()
-          : Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  ContactCardWidget(
-                    height: height,
-                    width: width,
-                    contact: contacts[2],
-                  ),
-                  // Expanded(
-                  //   child: ListView.builder(
-                  //     itemBuilder: (context, index) {
-                  //       return ;
-                  //     },
-                  //     itemCount: contacts.length,
-                  //   ),
-                  // )
-                ],
-              ),
-            ),
+          : ScreenContacts(height: height, width: width, contacts: contacts),
       floatingActionButton: CustomFloatingActionButtonWidget(
         showAddContact: showContactBottomSheet,
       ),
