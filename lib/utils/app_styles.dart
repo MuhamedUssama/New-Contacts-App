@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:new_contacts_app/utils/app_colors.dart';
+
+class AppStyles {
+  static const TextStyle font16WhiteMudium = TextStyle(
+    color: AppColors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle hintTextStyle = TextStyle(
+    color: AppColors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle elevatedButtonTextStyle = TextStyle(
+    color: AppColors.primaryColor,
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+  );
+}
