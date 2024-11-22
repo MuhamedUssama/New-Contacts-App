@@ -20,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
@@ -36,8 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: contacts.isEmpty
           ? const PlaceholderWidget()
           : ScreenContacts(
-              height: height,
-              width: width,
               contacts: contacts,
               onContactDeleteClicked: deleteContactByIndex,
             ),
