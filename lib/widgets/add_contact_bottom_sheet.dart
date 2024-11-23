@@ -84,7 +84,7 @@ class _AddContactBottomSheetState extends State<AddContactBottomSheet> {
                           )
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(28),
-                            child: Image.file(pickedImage!, fit: BoxFit.fill),
+                            child: Image.file(pickedImage!, fit: BoxFit.cover),
                           ),
                   ),
                 ),
