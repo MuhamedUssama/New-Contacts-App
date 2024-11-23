@@ -4,15 +4,11 @@ import 'package:new_contacts_app/models/contact_model.dart';
 import 'contact_card_widget.dart';
 
 class ScreenContacts extends StatelessWidget {
-  final double height;
-  final double width;
   final List<ContactModel> contacts;
   final Function onContactDeleteClicked;
 
   const ScreenContacts({
     super.key,
-    required this.height,
-    required this.width,
     required this.contacts,
     required this.onContactDeleteClicked,
   });
@@ -32,8 +28,6 @@ class ScreenContacts extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return ContactCardWidget(
-                  height: height,
-                  width: width,
                   contact: contacts[index],
                   deleteContactByIndex: () {
                     onContactDeleteClicked(index);

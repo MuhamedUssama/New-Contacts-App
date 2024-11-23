@@ -6,8 +6,6 @@ import 'package:new_contacts_app/utils/app_colors.dart';
 import 'package:new_contacts_app/utils/app_styles.dart';
 
 class ContactCardWidget extends StatelessWidget {
-  final double width;
-  final double height;
   final ContactModel contact;
   final Function deleteContactByIndex;
 
@@ -20,8 +18,6 @@ class ContactCardWidget extends StatelessWidget {
 
   const ContactCardWidget({
     super.key,
-    required this.width,
-    required this.height,
     required this.contact,
     required this.deleteContactByIndex,
   });
@@ -29,8 +25,6 @@ class ContactCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height * 0.32,
-      width: width * 0.45,
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -39,7 +33,6 @@ class ContactCardWidget extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            flex: 6,
             child: Stack(
               alignment: AlignmentDirectional.bottomStart,
               children: [
@@ -52,7 +45,7 @@ class ContactCardWidget extends StatelessWidget {
                         ),
                         child: Image.file(
                           contact.imageFile!,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           width: double.infinity,
                         ),
                       ),
@@ -71,59 +64,55 @@ class ContactCardWidget extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                children: [
-                  Row(
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Image.asset(AppIcons.emailIcon, height: 16, width: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      trimString(contact.email),
+                      style: AppStyles.cardContentTextStyle,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Image.asset(AppIcons.phoneIcon, height: 20, width: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      '+2${contact.phone}',
+                      style: AppStyles.cardContentTextStyle,
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    deleteContactByIndex();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(AppIcons.emailIcon, height: 16, width: 20),
+                      const Icon(Icons.delete, color: Colors.white, size: 18),
                       const SizedBox(width: 8),
                       Text(
-                        trimString(contact.email),
-                        style: AppStyles.cardContentTextStyle,
+                        'Delete',
+                        style: AppStyles.cardContentTextStyle
+                            .copyWith(color: Colors.white),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Image.asset(AppIcons.phoneIcon, height: 20, width: 20),
-                      const SizedBox(width: 8),
-                      Text(
-                        '+2${contact.phone}',
-                        style: AppStyles.cardContentTextStyle,
-                      ),
-                    ],
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      deleteContactByIndex();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.red,
-                      fixedSize: Size(width, height * 0.02),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.delete, color: Colors.white),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Delete',
-                          style: AppStyles.cardContentTextStyle
-                              .copyWith(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
