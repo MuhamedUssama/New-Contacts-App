@@ -45,7 +45,7 @@ class ContactCardWidget extends StatelessWidget {
                         ),
                         child: Image.file(
                           contact.imageFile!,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           width: double.infinity,
                         ),
                       ),
